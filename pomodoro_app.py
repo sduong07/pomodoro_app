@@ -9,14 +9,6 @@ from streamlit_autorefresh import st_autorefresh
 ytmusic = YTMusic()
 
 # Set page config
-hide_streamlit_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    </style>
-"""
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
-
 def set_bg_local(image_file):
     with open(image_file, "rb") as f:
         data = f.read()
