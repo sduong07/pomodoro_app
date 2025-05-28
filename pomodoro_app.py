@@ -9,13 +9,12 @@ from streamlit_autorefresh import st_autorefresh
 ytmusic = YTMusic()
 
 # Set page config
-st.set_page_config(page_title="Pomodoro Chill App", layout="wide")
-
 hide_streamlit_style = """
-<style>
-.css-hi6a2p {padding-top: 0rem;}
-</style>
-
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
