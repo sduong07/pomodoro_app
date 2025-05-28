@@ -1,3 +1,2 @@
 streamlit
-base64
 ytmusicapi
