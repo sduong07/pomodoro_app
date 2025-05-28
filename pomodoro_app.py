@@ -5,6 +5,18 @@ from ytmusicapi import YTMusic
 import datetime
 from streamlit_autorefresh import st_autorefresh
 
+# Set page config
+st.set_page_config(page_title="NBA Hall of Fame Simulator", layout="wide")
+
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 
 ytmusic = YTMusic()
 
