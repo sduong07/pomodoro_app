@@ -11,6 +11,14 @@ ytmusic = YTMusic()
 # Set page config
 st.set_page_config(page_title="Pomodoro Chill App", layout="wide")
 
+hide_streamlit_style = """
+<style>
+.css-hi6a2p {padding-top: 0rem;}
+</style>
+
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 
 def set_bg_local(image_file):
     with open(image_file, "rb") as f:
