@@ -174,7 +174,7 @@ with pomodoro_col:
 
     # Button to start the timer
     with col2:
-        if st.button("Start"):
+        if st.button("Start pomodoro session"):
             st.session_state.button_clicked = True
             st.session_state.phase = "work"
 
@@ -209,7 +209,7 @@ with pomodoro_col:
 with notes_col:
     st.markdown('<div class="section-heading">Study Notes</div>', unsafe_allow_html=True)
 
-    bg_color = st.color_picker("Choose a colour for the background", "#feff9c")
+    bg_color = st.color_picker("Select a background colour", "#feff9c")
 
     st.markdown(f"""
 <style>
@@ -224,7 +224,7 @@ with notes_col:
         st.session_state["study_notes"] = ""
 
 
-    notes = st.text_area( "Your Notes", value=st.session_state["study_notes"], height=300)
+    notes = st.text_area( "Write your notes here", value=st.session_state["study_notes"], height=300)
 
 
 #
