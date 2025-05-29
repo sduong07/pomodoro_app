@@ -143,14 +143,18 @@ st.markdown("""
 #st.header("Welcome to the Pomodoro comfy app. This app combines a pomodoro timer, sticky notes for studying, and a youtube music player to create a relaxing workspace.")
 st.markdown('<div class="main-header">Welcome to the Pomodoro comfy app. This app combines a pomodoro timer, sticky notes for studying, and a youtube music player to create a relaxing workspace.</div>', unsafe_allow_html=True)
 
+
 pomodoro_col, spacer, notes_col,spacer2, video_col = st.columns([1, 0.1, 1.2,0.1, 1.3])
 st.markdown("<br>", unsafe_allow_html=True)
+
 
 
 #Customize Timer/Sessions?/Alarm when it ends?
 
 
 with pomodoro_col:
+
+
 
     st.markdown('<div class="section-heading">Pomodoro Timer</div>', unsafe_allow_html=True)
 
@@ -200,66 +204,6 @@ with pomodoro_col:
                 st.session_state.t2 = 300
 
 
-    # if 'button_clicked' not in st.session_state:
-    #     st.session_state.button_clicked = False
-
-    # if 't1' not in st.session_state:
-    #     st.session_state.t1 = 1500
-
-    # if 't2' not in st.session_state:
-    #     st.session_state.t2 = 300
-
-    # if st.button("Start"):
-    #     st.session_state.button_clicked = True
-
-    # if st.session_state.button_clicked:
-    #     with st.empty():
-    #         while st.session_state.t1:
-    #             mins, secs = divmod(st.session_state.t1, 60)
-    #             timer = '{:02d}:{:02d}'.format(mins, secs)
-    #             st.header(f"⏳ {timer}")
-    #             time.sleep(1)
-    #             st.session_state.t1 -= 1
-    #         st.success("🔔 25 minutes is over! Time for a break!")
-
-    #     with st.empty():
-    #         while st.session_state.t2:
-    #             mins2, secs2 = divmod(st.session_state.t2, 60)
-    #             timer2 = '{:02d}:{:02d}'.format(mins2, secs2)
-    #             st.header(f"⏳ {timer2}")
-    #             time.sleep(1)
-    #             st.session_state.t2 -= 1
-    #         st.error("⏰ 5 minute break is over!")
-
-    #     st.session_state.button_clicked = False
-    #     st.session_state.t1 = 1500
-    #     st.session_state.t2 = 300
-
-    # button_clicked = st.button("Start")
-
-    # t1 = 1500
-    # t2 = 300
-
-    # if button_clicked:
-    #     with st.empty():
-    #         while t1:
-    #             mins, secs = divmod(t1, 60)
-    #             timer = '{:02d}:{:02d}'.format(mins, secs)
-    #             st.header(f"⏳ {timer}")
-    #             time.sleep(1)
-    #             t1 -= 1
-    #             st.success("🔔 25 minutes is over! Time for a break!")
-
-    #     with st.empty():
-    #         while t2:
-    #             # Start the break
-    #             mins2, secs2 = divmod(t2, 60)
-    #             timer2 = '{:02d}:{:02d}'.format(mins2, secs2)
-    #             st.header(f"⏳ {timer2}")
-    #             time.sleep(1)
-    #             t2 -= 1
-    #             st.error("⏰ 5 minute break is over!")
-
 
 #add an another? save? 
 with notes_col:
@@ -287,7 +231,7 @@ with notes_col:
 with video_col:
     st.markdown('<div class="section-heading">Youtube Music Player</div>', unsafe_allow_html=True)
 
-    st.write("Favourites and Recommendations for long study sessions")
+    st.write("Curated music to boost focus during long study sessions")
 
 
         # Dictionary of video titles and their URLs or file paths
@@ -308,14 +252,15 @@ with video_col:
     }
 
     # Let user select a video
-    selected_video = st.selectbox("Choose a music genre:", list(videos.keys()))
+    selected_video = st.selectbox("Select a music genre:", list(videos.keys()))
 
     # Show the selected video
+    st.write("Now Playing:")
     st.video(videos[selected_video])
 
-    st.write("Choose your own song or genre")
+    st.write("Or play your own music")
 
-    with st.expander("Choose your own youtube video"):
+    with st.expander("Choose a youtube video"):
         song_link = st.text_input("Youtube link")
 
         if song_link.strip():
@@ -325,7 +270,7 @@ with video_col:
         
     
    #Step 1: User input
-    with st.expander("Search a song on youtube"):
+    with st.expander("Search for a song on youtube"):
         query = st.text_input("For Example: 'lofi chill'")
 
         if query:
