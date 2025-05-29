@@ -6,7 +6,7 @@ import datetime
 from streamlit_autorefresh import st_autorefresh
 
 # Set page config
-st.set_page_config(page_title="NBA Hall of Fame Simulator", layout="wide")
+st.set_page_config(page_title="Pomodoro Comfy App", layout="wide")
 
 hide_streamlit_style = """
     <style>
@@ -273,20 +273,19 @@ with video_col:
     with st.expander("Search for a song on youtube"):
         query = st.text_input("For Example: 'lofi chill'")
 
-        if query:
+    if query:
         # Step 2: Perform search
-            results = ytmusic.search(query, filter="songs")
+        results = ytmusic.search(query, filter="songs")
 
         # Step 3: Show results and play on click
-            for idx, song in enumerate(results[:10]):
-                title = song["title"]
-                artist = song["artists"][0]["name"]
-                video_id = song["videoId"]
+        for idx, song in enumerate(results[:10]):
+            title = song["title"]
+            artist = song["artists"][0]["name"]
+            video_id = song["videoId"]
 
-
-                with st.expander(f"{title} - {artist}"):
-                    st.write(f"▶️ {title} by {artist}")
-                    st.video(f"https://www.youtube.com/watch?v={video_id}") 
+            with st.expander(f"{title} - {artist}"):
+                st.write(f"▶️ {title} by {artist}")
+                st.video(f"https://www.youtube.com/watch?v={video_id}") 
 
 
 
