@@ -4,6 +4,8 @@ import base64
 from ytmusicapi import YTMusic
 import datetime
 from streamlit_autorefresh import st_autorefresh
+from playsound import playsound
+from urllib.parse import urlparse, parse_qs
 
 # Set page config
 st.set_page_config(page_title="Pomodoro Comfy App", layout="wide")
@@ -160,15 +162,24 @@ with pomodoro_col:
 
     col1, col2, col3 = st.columns([1, 2, 1])
 
+    st.write("Settings")
+
+    pomodoro_timer = st.number_input("How long is the pomodoro?", value=25, placeholder="Type a number")
+    pomodoro_break_timer = st.number_input("How long is the break?", value=5, placeholder="Type a number")
+    #alarm_type = st.selectbox("Select the alarm type:", ("Birds", "Clock", "Video Game"), index=None)
+    #alarm_sounds = {"Birds": "bird_alarm.mp3","Clock": "clock_alarm.mp3", "Video Game": "game_alarm.mp3" }
+
 
 
     # Initialize session state
     if 'button_clicked' not in st.session_state:
         st.session_state.button_clicked = False
     if 't1' not in st.session_state:
-        st.session_state.t1 = 1500  # 25 minutes
+        st.session_state.t1 = 60 * pomodoro_timer       
+        #st.session_state.t1 = 1500  # 25 minutes
     if 't2' not in st.session_state:
-        st.session_state.t2 = 300   # 5 minutes
+        st.session_state.t2 = 60 * pomodoro_break_timer   
+        #st.session_state.t2 = 300   # 5 minutes
     if 'phase' not in st.session_state:
         st.session_state.phase = "work"  # can be "work", "break", or "done"
 
@@ -177,6 +188,9 @@ with pomodoro_col:
         if st.button("Start pomodoro session"):
             st.session_state.button_clicked = True
             st.session_state.phase = "work"
+            st.session_state.t1 = 60 * pomodoro_timer
+            st.session_state.t2 = 60 * pomodoro_break_timer 
+            
 
     # Refresh every second
     if st.session_state.button_clicked and st.session_state.phase != "done":
@@ -189,7 +203,9 @@ with pomodoro_col:
                 st.session_state.t1 -= 1
             else:
                 st.success("🔔 25 minutes is over! Time for a break!")
+
                 st.session_state.phase = "break"
+                st.session_state.t2 = 60 * pomodoro_break_timer
 
         elif st.session_state.phase == "break":
             mins, secs = divmod(st.session_state.t2, 60)
@@ -200,14 +216,13 @@ with pomodoro_col:
                 st.error("⏰ 5 minute break is over!")
                 st.session_state.phase = "done"
                 st.session_state.button_clicked = False
-                st.session_state.t1 = 1500
-                st.session_state.t2 = 300
-
+                st.session_state.t1 = 60 * pomodoro_timer
+                st.session_state.t2 = 60 * pomodoro_break_timer
 
 
 #add an another? save? 
 with notes_col:
-    st.markdown('<div class="section-heading">Study Notes</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-heading">Study Notes or Tasks</div>', unsafe_allow_html=True)
 
     bg_color = st.color_picker("Select a background colour", "#feff9c")
 
@@ -224,12 +239,29 @@ with notes_col:
         st.session_state["study_notes"] = ""
 
 
-    notes = st.text_area( "Write your notes here", value=st.session_state["study_notes"], height=300)
+    notes = st.text_area( "Write your notes or tasks here", value=st.session_state["study_notes"], height=300)
+
+    st.download_button(
+            label="Download text",
+            data=notes,
+            file_name="message.txt",
+            on_click="ignore",
+            type="primary",
+            icon=":material/download:",
+    )
+
+
+
+        
 
 
 #
 with video_col:
     st.markdown('<div class="section-heading">Youtube Music Player</div>', unsafe_allow_html=True)
+
+
+    #video_id = "dQw4w9WgXcQ"  # replace with your video ID
+    
 
     st.write("Curated music to boost focus during long study sessions")
 
@@ -258,13 +290,39 @@ with video_col:
     st.write("Now Playing:")
     st.video(videos[selected_video])
 
+    
+
     st.write("Or play your own music")
 
     with st.expander("Choose a youtube video"):
         song_link = st.text_input("Youtube link")
+        parsed_url = urlparse(song_link)
+        query_params = parse_qs(parsed_url.query)
+        request_video_id = query_params.get("v", [None])[0]
+
+
 
         if song_link.strip():
-            st.video(song_link)
+            loop = st.checkbox("Repeat video", value=True, key=f"loop_video_{request_video_id}")
+
+            # Construct embed URL with optional loop
+            embed_url = f"https://www.youtube.com/embed/{request_video_id}?autoplay=1&mute=1"
+            if loop:
+                embed_url += f"&loop=1&playlist={request_video_id}"
+
+            st.markdown(
+                f"""
+                <iframe width="100%" height="400"
+                    src="{embed_url}"
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen
+                ></iframe>
+                """,
+                unsafe_allow_html=True
+            )
+
+            #st.video(song_link)
 
 
         
@@ -285,7 +343,24 @@ with video_col:
 
             with st.expander(f"{title} - {artist}"):
                 st.write(f"▶️ {title} by {artist}")
-                st.video(f"https://www.youtube.com/watch?v={video_id}") 
+                #st.video(f"https://www.youtube.com/watch?v={video_id}")
+
+                loop2 = st.checkbox("Repeat video", value=True, key=f"loop_video_{video_id}")
+                embed_url2 = f"https://www.youtube.com/embed/{video_id}?autoplay=1&mute=1"
+                if loop2:
+                    embed_url2 += f"&loop=1&playlist={video_id}"
+
+                st.markdown(
+                    f"""
+                    <iframe width="100%" height="400"
+                        src="{embed_url2}"
+                        frameborder="0"
+                        allow="autoplay; encrypted-media"
+                        allowfullscreen
+                    ></iframe>
+                    """,
+                    unsafe_allow_html=True
+                ) 
 
 
 
