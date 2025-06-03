@@ -4,7 +4,6 @@ import base64
 from ytmusicapi import YTMusic
 import datetime
 from streamlit_autorefresh import st_autorefresh
-from playsound import playsound
 from urllib.parse import urlparse, parse_qs
 
 # Set page config
