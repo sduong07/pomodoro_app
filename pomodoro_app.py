@@ -237,8 +237,16 @@ with notes_col:
     if "study_notes" not in st.session_state:
         st.session_state["study_notes"] = ""
 
+    if "note_text" not in st.session_state:
+        st.session_state.note_text = ""
 
-    notes = st.text_area( "Write your notes or tasks here", value=st.session_state["study_notes"], height=300)
+    def clear_text():
+        st.session_state.note_text = ""
+
+
+    notes = st.text_area( "Write your notes or tasks here", value=st.session_state["study_notes"], height=300, key="note_text")
+
+    st.button("Clear Text", on_click=clear_text)
 
     st.download_button(
             label="Download text",
@@ -250,10 +258,7 @@ with notes_col:
     )
 
 
-
         
-
-
 #
 with video_col:
     st.markdown('<div class="section-heading">Youtube Music Player</div>', unsafe_allow_html=True)
