@@ -107,7 +107,7 @@ st.markdown("""
 
 
 
-st.markdown('<div class="main-header">Welcome to the Pomodoro comfy app. This app combines a pomodoro timer, sticky notes for studying, and a youtube music player to create a relaxing workspace.</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header">Welcome to the Pomodoro comfy. This app combines a pomodoro timer, sticky notes for studying, and a youtube music player to create a relaxing workspace.</div>', unsafe_allow_html=True)
 
 pomodoro_col, spacer, notes_col,spacer2, video_col = st.columns([1, 0.1, 1.2,0.1, 1.3])
 st.markdown("<br>", unsafe_allow_html=True)
@@ -117,10 +117,12 @@ with pomodoro_col:
 
     st.markdown('<div class="section-heading">Pomodoro Timer</div>', unsafe_allow_html=True)
 
-    st.subheader("Settings")
+    st.markdown("<br>", unsafe_allow_html=True)
 
     pomodoro_timer = st.number_input("How long is the focused work session?", value=25, placeholder="Type a number")
+    st.markdown("<br>", unsafe_allow_html=True)
     pomodoro_break_timer = st.number_input("How long is the break?", value=5, placeholder="Type a number")
+    st.markdown("<br>", unsafe_allow_html=True)
     #alarm_type = st.selectbox("Select the alarm type:", ("Birds", "Clock", "Video Game"), index=None)
     #alarm_sounds = {"Birds": "bird_alarm.mp3","Clock": "clock_alarm.mp3", "Video Game": "game_alarm.mp3" }
 
@@ -178,8 +180,10 @@ with pomodoro_col:
 #note section
 with notes_col:
     st.markdown('<div class="section-heading">Study Notes or Tasks</div>', unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
 
     bg_color = st.color_picker("Select a background colour", "#feff9c")
+    st.markdown("<br>", unsafe_allow_html=True)
 
     st.markdown(f"""
 <style>
@@ -200,7 +204,7 @@ with notes_col:
         st.session_state.note_text = ""
 
 
-    notes = st.text_area( "Write your notes or tasks here", value=st.session_state["study_notes"], height=300, key="note_text")
+    notes = st.text_area( "Write your notes or tasks here", value=st.session_state["study_notes"], height=200, key="note_text")
 
     st.button("Clear Text", on_click=clear_text)
 
@@ -218,9 +222,7 @@ with notes_col:
 with video_col:
     ytmusic = YTMusic()
     st.markdown('<div class="section-heading">Youtube Music Player</div>', unsafe_allow_html=True)
-
-    st.write("Curated music to boost focus during long study sessions")
-
+    st.markdown("<br>", unsafe_allow_html=True)
 
     # Dictionary of video titles and their URLs or file paths
     videos = {
@@ -243,6 +245,7 @@ with video_col:
     selected_video = st.selectbox("Select a music genre:", list(videos.keys()))
 
     # Show the selected video
+    st.markdown("<br>", unsafe_allow_html=True)
     st.write("Now Playing:")
     st.video(videos[selected_video])
 
