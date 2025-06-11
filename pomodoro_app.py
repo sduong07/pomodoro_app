@@ -108,6 +108,7 @@ st.markdown("""
 
 
 st.markdown('<div class="main-header">Welcome to the Pomodoro comfy. This app combines a pomodoro timer, sticky notes for studying, and a youtube music player to create a relaxing workspace.</div>', unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 pomodoro_col, spacer, notes_col,spacer2, video_col = st.columns([1, 0.1, 1.2,0.1, 1.3])
 st.markdown("<br>", unsafe_allow_html=True)
