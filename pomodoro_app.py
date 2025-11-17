@@ -107,7 +107,7 @@ st.markdown("""
 
 
 
-st.markdown('<div class="main-header">Welcome to the Pomodoro comfy. This app combines a pomodoro timer, sticky notes for studying, and a youtube music player to create a relaxing workspace.</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header">Welcome to Pomodoro comfy. This app combines the pomodoro technique, sticky notes for studying, and a youtube music player to create a relaxing workspace. The Pomodoro technique is a time management method using a timer to divide work into minute intervals, separated by short breaks to enhance focus and productivity.</div>', unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
 pomodoro_col, spacer, notes_col,spacer2, video_col = st.columns([1, 0.1, 1.2,0.1, 1.3])
@@ -127,7 +127,6 @@ with pomodoro_col:
     #alarm_type = st.selectbox("Select the alarm type:", ("Birds", "Clock", "Video Game"), index=None)
     #alarm_sounds = {"Birds": "bird_alarm.mp3","Clock": "clock_alarm.mp3", "Video Game": "game_alarm.mp3" }
 
-
     # Initialize session state
     if 'button_clicked' not in st.session_state:
         st.session_state.button_clicked = False
@@ -136,7 +135,7 @@ with pomodoro_col:
     if 't2' not in st.session_state:
         st.session_state.t2 = 60 * pomodoro_break_timer   
     if 'phase' not in st.session_state:
-        st.session_state.phase = "work"  
+        st.session_state.phase = "work"
 
     # Button to start the timer
     if st.button("Start pomodoro session"):
@@ -171,11 +170,13 @@ with pomodoro_col:
             if st.session_state.t2 > 0:
                 st.session_state.t2 -= 1
             else:
+
                 st.error("⏰ 5 minute break is over!")
                 st.session_state.phase = "done"
                 st.session_state.button_clicked = False
                 st.session_state.t1 = 60 * pomodoro_timer
                 st.session_state.t2 = 60 * pomodoro_break_timer
+                
 
 
 #note section
