@@ -107,7 +107,13 @@ st.markdown("""
 
 
 
-st.markdown('<div class="main-header">Welcome to Pomodoro comfy. This app combines the pomodoro technique, sticky notes for studying, and a youtube music player to create a relaxing workspace. The Pomodoro technique is a time management method using a timer to divide work into minute intervals, separated by short breaks to enhance focus and productivity.</div>', unsafe_allow_html=True)
+
+st.markdown('<div class="main-header">Welcome to Pomodoro comfy!</div>', unsafe_allow_html=True)
+
+st.subheader("This app combines the pomodoro technique, sticky notes for studying, and a youtube music player to create a relaxing workspace. The Pomodoro technique is a time management method using a timer to divide work into minute intervals, separated by short breaks to enhance focus and productivity.")
+
+
+
 st.markdown("<br>", unsafe_allow_html=True)
 
 pomodoro_col, spacer, notes_col,spacer2, video_col = st.columns([1, 0.1, 1.2,0.1, 1.3])
