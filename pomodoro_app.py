@@ -25,6 +25,16 @@ header[data-testid="stHeader"] {
 </style>
 """
 
+hide_footer = """
+<style>
+footer {visibility: hidden;}
+footer:after {content:''; visibility:hidden;}
+</style>
+"""
+
+st.markdown(hide_footer, unsafe_allow_html=True)
+
+
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.markdown(top_bar_css, unsafe_allow_html=True)
 
