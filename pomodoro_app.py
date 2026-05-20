@@ -1,14 +1,18 @@
-#Goal: Productivity App with Pomodoro Section, Note section, and a youtube music player section.
+#Goal: Productivity App with Pomodoro Section, Note section, and a Youtube music player section. 
 
+#Imports 
 import streamlit as st
 import base64
 from ytmusicapi import YTMusic
 from streamlit_autorefresh import st_autorefresh
 from urllib.parse import urlparse, parse_qs
 
-#Page Config
+#Page Configuration
 st.set_page_config(page_title="Pomodoro Comfy App", layout="wide")
 
+#CSS
+
+#Hides the main menu, footer, and header
 hide_streamlit_style = """
     <style>
     #MainMenu {visibility: hidden;}
@@ -16,7 +20,7 @@ hide_streamlit_style = """
     header {visibility: hidden;}
     </style>
 """
-
+#Makes the header transparent
 top_bar_css = """
 <style>
 header[data-testid="stHeader"] {
@@ -25,6 +29,7 @@ header[data-testid="stHeader"] {
 </style>
 """
 
+#Makes the footer hidden
 hide_footer = """
 <style>
 footer {visibility: hidden;}
@@ -32,13 +37,52 @@ footer:after {content:''; visibility:hidden;}
 </style>
 """
 
+
 st.markdown(hide_footer, unsafe_allow_html=True)
-
-
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.markdown(top_bar_css, unsafe_allow_html=True)
 
-#Set Background picture
+
+#Injects custom css styling(Font to Pooppins, reduces top padding, defining styles for .main-header and.section-heading)
+st.markdown("""
+<style>
+
+.block-container {
+        padding-top: 1rem !important;
+    }
+
+
+    html, body, [class*="css"] {
+        font-family: 'Poppins', sans-serif;
+    }
+
+
+
+    .main-header {
+    font-size: 2rem;
+        font-weight: 700;
+        margin-top: 0;
+        padding-top: 0;
+        text-align: center;
+        
+    }
+
+    .section-heading {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+</style>
+""", unsafe_allow_html=True)
+
+#Defining Functions
+def clear_text():
+    st.session_state.note_text = ""
+
+#Set background to a file image
 def set_bg_local(image_file):
     with open(image_file, "rb") as f:
         data = f.read()
@@ -57,6 +101,7 @@ def set_bg_local(image_file):
         unsafe_allow_html=True,
     )
 
+#Css functions
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -64,143 +109,150 @@ def local_css(file_name):
 def remote_css(url):
    st.markdown(f'<link href="{url}" rel="stylesheet">', unsafe_allow_html=True)
 
+
+
 set_bg_local("background.jpg")
 local_css("style.css")
 remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
 
-st.markdown("""
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-""", unsafe_allow_html=True)
 
-st.markdown("""
-<style>
-
-.block-container {
-        padding-top: 1rem !important;
-    }
-
-
-    html, body, [class*="css"] {
-        font-family: 'Poppins', sans-serif;
-    }
-
-
-
-    /* Main heading */
-    .main-header {
-
-    font-size: 2rem;
-        font-weight: 700;
-        margin-top: 0;
-        padding-top: 0;
-        text-align: center;
-        
-    }
-
-    /* Section headings */
-    .section-heading {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-top: 1rem;
-        margin-bottom: 0.5rem;
-        text-align: center;
-    }
-
-    /* Subtext/labels */
-    .subtext {
-        font-size: 1rem;
-        font-weight: 400;
-        color: #333;
-    }
-</style>
-""", unsafe_allow_html=True)
-
-
-
-
-st.markdown('<div class="main-header">Welcome to Pomodoro comfy!</div>', unsafe_allow_html=True)
-
-st.subheader("This app combines the pomodoro technique, sticky notes for studying, and a youtube music player to create a relaxing workspace. The Pomodoro technique is a time management method using a timer to divide work into minute intervals, separated by short breaks to enhance focus and productivity.")
-
+#Header section
+st.markdown('<div class="main-header">Welcome to Pomodoro Comfy!</div>', unsafe_allow_html=True)
+st.subheader("This productivity app combines the pomodoro technique, sticky notes for studying, and a youtube music player to create a relaxing workspace. The pomodoro technique is a time management method using a timer to divide work into minute intervals, separated by short breaks to enhance focus and productivity.")
 
 
 st.markdown("<br>", unsafe_allow_html=True)
+st.divider()
 
+#Layout 
 pomodoro_col, spacer, notes_col,spacer2, video_col = st.columns([1, 0.1, 1.2,0.1, 1.3])
 st.markdown("<br>", unsafe_allow_html=True)
 
-#pomodoro section
+#Pomodoro section
 with pomodoro_col:
 
     st.markdown('<div class="section-heading">Pomodoro Timer</div>', unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    #Setting up pomodoro settings
+    pomodoro_timer = st.number_input(
+        "**How long should each focused work session be? (minutes)**",
+        min_value=1,
+        value=25
+    )
+
+
+    pomodoro_break_timer = st.number_input(
+        "**How long should each break be? (minutes)**",
+        min_value=1,
+        value=5
+    )
+
+
+    #Setting Up Alarm for Pomodoro
+
+    alarm_sounds = {
+    "Classic Alarm": "https://raw.githubusercontent.com/sduong07/pomodoro_app/main/alarm/classic_alarm.mp3",
+    "Motivation Alarm": "https://raw.githubusercontent.com/sduong07/pomodoro_app/main/alarm/motivation_alarm.mp3",
+    "Piano Alarm": "https://raw.githubusercontent.com/sduong07/pomodoro_app/main/alarm/piano_alarm.mp3",
+    "Rain Alarm": "https://raw.githubusercontent.com/sduong07/pomodoro_app/main/alarm/rain_alarm.mp3",
+    "Uplifting Alarm": "https://raw.githubusercontent.com/sduong07/pomodoro_app/main/alarm/uplifting_alarm.mp3",
+}
+    
+
+    alarm_sound = st.selectbox(
+        "**Select an alarm sound**",
+        list(alarm_sounds.keys())
+
+    )
+
+    alarm_sound_url = alarm_sounds[alarm_sound]
+
+    st.markdown("**Preview selected alarm:**")
+    st.audio(alarm_sound_url)
+
+
+
+    ALERT_DURATION = st.number_input(
+        "**How long should the alarm play? (seconds)**",
+        min_value=2,
+        max_value=7, 
+        value=5
+    )
+
+
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    pomodoro_timer = st.number_input("How long is the focused work session?", value=25, placeholder="Type a number")
-    st.markdown("<br>", unsafe_allow_html=True)
-    pomodoro_break_timer = st.number_input("How long is the break?", value=5, placeholder="Type a number")
-    st.markdown("<br>", unsafe_allow_html=True)
-    #alarm_type = st.selectbox("Select the alarm type:", ("Birds", "Clock", "Video Game"), index=None)
-    #alarm_sounds = {"Birds": "bird_alarm.mp3","Clock": "clock_alarm.mp3", "Video Game": "game_alarm.mp3" }
-
-    # Initialize session state
-    if 'button_clicked' not in st.session_state:
+    #initialize session state
+    if "button_clicked" not in st.session_state:
         st.session_state.button_clicked = False
-    if 't1' not in st.session_state:
-        st.session_state.t1 = 60 * pomodoro_timer       
-    if 't2' not in st.session_state:
-        st.session_state.t2 = 60 * pomodoro_break_timer   
-    if 'phase' not in st.session_state:
+
+    if "t1" not in st.session_state:
+        st.session_state.t1 = pomodoro_timer * 60
+
+    if "t2" not in st.session_state:
+        st.session_state.t2 = pomodoro_break_timer * 60
+
+    if "phase" not in st.session_state:
         st.session_state.phase = "work"
 
-    # Button to start the timer
-    if st.button("Start pomodoro session"):
+    if "alert_timer" not in st.session_state:
+        st.session_state.alert_timer = 0
+
+
+    #Setting up pomodoro timer when button is clicked
+    if st.button("Start Pomodoro Session"):
         st.session_state.button_clicked = True
         st.session_state.phase = "work"
-        st.session_state.t1 = 60 * pomodoro_timer
-        st.session_state.t2 = 60 * pomodoro_break_timer
-        st.session_state.paused = False
+        st.session_state.t1 = pomodoro_timer * 60
+        st.session_state.t2 = pomodoro_break_timer * 60
+        st.session_state.alert_timer = 0
 
-    # Refresh every second
     if st.session_state.button_clicked and st.session_state.phase != "done":
-        count = st_autorefresh(interval=1000, key="timer_refresh")
+        st_autorefresh(interval=1000, key="timer_refresh")
 
+        
         if st.session_state.phase == "work":
-
-                
             mins, secs = divmod(st.session_state.t1, 60)
-            st.header(f"⏳ Work: {mins:02d}:{secs:02d}")
+            st.title(f"Work: {mins:02d}:{secs:02d}")
+
             if st.session_state.t1 > 0:
                 st.session_state.t1 -= 1
-                
             else:
-                    
-                st.success("🔔 25 minutes is over! Time for a break!")
+                st.success("Work session complete!")
+                st.session_state.phase = "alert"
+                st.session_state.alert_timer = ALERT_DURATION
 
+        
+        elif st.session_state.phase == "alert":
+            st.audio(alarm_sound_url, autoplay=True)
+
+            if st.session_state.alert_timer > 0:
+                st.session_state.alert_timer -= 1
+            else:
                 st.session_state.phase = "break"
-                st.session_state.t2 = 60 * pomodoro_break_timer
+                st.session_state.t2 = pomodoro_break_timer * 60
 
+        
         elif st.session_state.phase == "break":
             mins, secs = divmod(st.session_state.t2, 60)
-            st.header(f"⏳ Break: {mins:02d}:{secs:02d}")
+            st.title(f"Break: {mins:02d}:{secs:02d}")
+
             if st.session_state.t2 > 0:
                 st.session_state.t2 -= 1
             else:
-
-                st.error("⏰ 5 minute break is over!")
-                st.session_state.phase = "done"
+                st.error("Break time is over—back to work!")
                 st.session_state.button_clicked = False
-                st.session_state.t1 = 60 * pomodoro_timer
-                st.session_state.t2 = 60 * pomodoro_break_timer
-                
+                st.session_state.phase = "done"
 
 
-#note section
+#Notes section
 with notes_col:
-    st.markdown('<div class="section-heading">Study Notes or Tasks</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-heading">Study Notes & Tasks </div>', unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
 
-    bg_color = st.color_picker("Select a background colour", "#feff9c")
+    bg_color = st.color_picker("**Select a background colour**", "#feff9c")
     st.markdown("<br>", unsafe_allow_html=True)
 
     st.markdown(f"""
@@ -218,11 +270,8 @@ with notes_col:
     if "note_text" not in st.session_state:
         st.session_state.note_text = ""
 
-    def clear_text():
-        st.session_state.note_text = ""
 
-
-    notes = st.text_area( "Write your notes or tasks here", value=st.session_state["study_notes"], height=200, key="note_text")
+    notes = st.text_area( "**Write your study notes or tasks here**", value=st.session_state["study_notes"], height=200, key="note_text")
 
     st.button("Clear Text", on_click=clear_text)
 
@@ -236,43 +285,66 @@ with notes_col:
     )
 
         
-#youtube video player section
-with video_col:
+#Youtube Music Player Section
+with video_col:  
     ytmusic = YTMusic()
-    st.markdown('<div class="section-heading">Youtube Music Player</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-heading">YouTube Music Player</div>', unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Dictionary of video titles and their URLs or file paths
+    
+    
+    #Setting up youtube player with curated playlist
+    st.write("**Here are some sample playlist and genres for studying**")
     videos = {
-        "Lofi hip hop": "https://www.youtube.com/watch?v=-FlxM_0S2lA",
+        #Lo-Fi Beats
+        "Lo-fi Jazz" : "https://www.youtube.com/watch?v=CBSlu_VMS9U",
+        "Lo-fi Hip Hop": "https://www.youtube.com/watch?v=-FlxM_0S2lA",
+        "Pokemon Lo-fi ": "https://www.youtube.com/watch?v=ceHXUTnOlDc",
+        "Studio Ghibi Lo-fi ": "https://www.youtube.com/watch?v=AZals4U6Z_I",
+        "Japanese Lo-fi ": "https://www.youtube.com/watch?v=mVycGYAPehY",
+
+        #Piano
+        "Classical Piano": "https://www.youtube.com/watch?v=WLWJy1eXX2c",
         "Video Game Piano": "https://www.youtube.com/watch?v=k0h_8svvr1I",
+        "Anime Piano": "https://www.youtube.com/watch?v=HSOtku1j600",
+        "K-Pop Piano": "https://www.youtube.com/watch?v=KFJ3gNMq6do",
+        "Studio Ghibli Piano": "https://www.youtube.com/watch?v=l4WkvqGe_Ak",
+        "Jazz Piano": "https://www.youtube.com/watch?v=MYPVQccHhAQ",
 
-        "Anime piano": "https://www.youtube.com/watch?v=Ls0BwNdIptM",
-        "Kpop piano": "https://www.youtube.com/watch?v=S8GpX3SAeig",
-        "Studio ghibli piano": "https://www.youtube.com/watch?v=l4WkvqGe_Ak",
+        #Ambience
+        "Nature Ambience": "https://www.youtube.com/watch?v=ipf7ifVSeDU",
+        "Nintendo Video Game Ambience": "https://www.youtube.com/watch?v=MAsudG24NVM",
+        "Kingdom Hearts Ambience": "https://www.youtube.com/watch?v=hegvprK4TrM",
+        "Animal Crossing Ambience": "https://www.youtube.com/watch?v=CBYSzErVczM",
+        
 
-        "Pokemon Lofi ": "https://www.youtube.com/watch?v=ceHXUTnOlDc",
-        "Studio ghibi Lofi ": "https://www.youtube.com/watch?v=AZals4U6Z_I",
-        "Lofi beats": "https://www.youtube.com/watch?v=_Ns2Liu-8qg",
-        "Kop": "https://www.youtube.com/watch?v=0DEH4qY27N4"
-
+        #Cafe
+        "Rainy Jazz Cafe": "https://www.youtube.com/watch?v=NJuSStkIZBg", 
+        "K-Pop Cafe": "https://www.youtube.com/watch?v=zZgW3zi039M"
 
     }
 
-    # Let user select a video
-    selected_video = st.selectbox("Select a music genre:", list(videos.keys()))
+    genres = ['Lo-fi', 'Piano', 'Ambience', 'Cafe']
 
-    # Show the selected video
+
+    selected_genre = st.selectbox("**Select a genre**:", genres)
+
+    filtered_videos = {name: url for name, url in videos.items() if selected_genre.lower() in name.lower()}
+
+    selected_video = st.selectbox(f"**Select a {selected_genre} playlist**:", list(filtered_videos.keys()))
+
+
     st.markdown("<br>", unsafe_allow_html=True)
-    st.write("Now Playing:")
-    st.video(videos[selected_video])
+    st.write("**Now Playing:**")
+    st.video(filtered_videos[selected_video])
 
     
 
-    st.write("Or play your own music")
+    st.write("**Or play your own music**")
 
-    with st.expander("Choose a youtube video"):
-        song_link = st.text_input("Youtube link")
+    #Setting up user choosing their own video with link
+    with st.expander("Play a YouTube video by link"):
+        song_link = st.text_input("YouTube video link")
         parsed_url = urlparse(song_link)
         query_params = parse_qs(parsed_url.query)
         request_video_id = query_params.get("v", [None])[0]
@@ -282,7 +354,7 @@ with video_col:
         if song_link.strip():
             loop = st.checkbox("Repeat video", value=True, key=f"loop_video_{request_video_id}")
 
-            # Construct embed URL with optional loop
+            
             embed_url = f"https://www.youtube.com/embed/{request_video_id}?autoplay=1&mute=1"
             if loop:
                 embed_url += f"&loop=1&playlist={request_video_id}"
@@ -301,19 +373,15 @@ with video_col:
 
             
 
-
-        
-    
-   #Step 1: User input
-    
+    #Setting up user choosing to search for a song or artist on youtube music
     with st.expander("Search for a song or artist on youtube"):
         query = st.text_input("For Example: 'LE SSERAFIM'")
 
     if query:
-        # Step 2: Perform search
+        
         results = ytmusic.search(query, filter="songs")
 
-        # Step 3: Show results and play on click
+        
         for idx, song in enumerate(results[:10]):
             title = song["title"]
             artist = song["artists"][0]["name"]
