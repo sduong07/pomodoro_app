@@ -206,6 +206,9 @@ with pomodoro_col:
     if "alert_timer" not in st.session_state:
         st.session_state.alert_timer = 0
 
+    if "next_phase" not in st.session_state:
+        st.session_state.next_phase = None
+
 
     #start button
     if st.button("Start Pomodoro Session"):
@@ -248,6 +251,7 @@ with pomodoro_col:
                 else:
                     st.success("Work session complete!")
                     st.session_state.phase = "alert"
+                    st.session_state.next_phase = "break"
                     st.session_state.alert_timer = ALERT_DURATION
 
 
@@ -260,8 +264,13 @@ with pomodoro_col:
                 if st.session_state.alert_timer > 0:
                     st.session_state.alert_timer -= 1
                 else:
-                    st.session_state.phase = "break"
+                    st.session_state.phase = st.session_state.next_phase
+
+                if st.session_state.next_phase == "break":
                     st.session_state.t2 = pomodoro_break_timer * 60
+
+                elif st.session_state.next_phase == "work":
+                    st.session_state.t1 = pomodoro_timer * 60
 
 
         #break
@@ -275,9 +284,10 @@ with pomodoro_col:
                     st.session_state.t2 -= 1
                 else:
                     st.error("Break time is over—back to work!")
-                    st.session_state.button_clicked = False
-                    st.session_state.phase = "done"
-
+                    #restart work session
+                    st.session_state.phase = "alert"
+                    st.session_state.next_phase = "work"
+                    st.session_state.alert_timer = ALERT_DURATION
 
 #Notes section
 with notes_col:
