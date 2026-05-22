@@ -6,6 +6,7 @@ import base64
 from ytmusicapi import YTMusic
 from streamlit_autorefresh import st_autorefresh
 from urllib.parse import urlparse, parse_qs
+import streamlit.components.v1 as components
 
 #Page Configuration
 st.set_page_config(page_title="Pomodoro Comfy App", layout="wide")
@@ -44,6 +45,7 @@ st.markdown(top_bar_css, unsafe_allow_html=True)
 
 
 #Injects custom css styling(Font to Pooppins, reduces top padding, defining styles for .main-header and.section-heading)
+
 st.markdown("""
 <style>
 
@@ -133,6 +135,7 @@ with pomodoro_col:
 
     st.markdown('<div class="section-heading">Pomodoro Timer</div>', unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("<div id='summary'></div>", unsafe_allow_html=True)
 
     #Setting up pomodoro settings
     pomodoro_timer = st.number_input(
@@ -188,6 +191,9 @@ with pomodoro_col:
     if "button_clicked" not in st.session_state:
         st.session_state.button_clicked = False
 
+    if "paused" not in st.session_state:
+        st.session_state.paused = False
+
     if "t1" not in st.session_state:
         st.session_state.t1 = pomodoro_timer * 60
 
@@ -201,50 +207,76 @@ with pomodoro_col:
         st.session_state.alert_timer = 0
 
 
-    #Setting up pomodoro timer when button is clicked
+    #start button
     if st.button("Start Pomodoro Session"):
         st.session_state.button_clicked = True
+        st.session_state.paused = False
         st.session_state.phase = "work"
         st.session_state.t1 = pomodoro_timer * 60
         st.session_state.t2 = pomodoro_break_timer * 60
         st.session_state.alert_timer = 0
 
+        components.html("""
+        <script>
+            window.parent.document
+                .getElementById("summary")
+                .scrollIntoView({behavior: "smooth"});
+        </script>
+        """, height=0)
+
+
+    #pause/resume button
     if st.session_state.button_clicked and st.session_state.phase != "done":
+
+        pause_label = "Resume" if st.session_state.paused else "Pause"
+
+        if st.button(pause_label):
+            st.session_state.paused = not st.session_state.paused
+
         st_autorefresh(interval=1000, key="timer_refresh")
 
-        
+
+        #pomodoro
         if st.session_state.phase == "work":
+
             mins, secs = divmod(st.session_state.t1, 60)
             st.title(f"Work: {mins:02d}:{secs:02d}")
 
-            if st.session_state.t1 > 0:
-                st.session_state.t1 -= 1
-            else:
-                st.success("Work session complete!")
-                st.session_state.phase = "alert"
-                st.session_state.alert_timer = ALERT_DURATION
+            if not st.session_state.paused:
+                if st.session_state.t1 > 0:
+                    st.session_state.t1 -= 1
+                else:
+                    st.success("Work session complete!")
+                    st.session_state.phase = "alert"
+                    st.session_state.alert_timer = ALERT_DURATION
 
-        
+
+        #alarm
         elif st.session_state.phase == "alert":
+
             st.audio(alarm_sound_url, autoplay=True)
 
-            if st.session_state.alert_timer > 0:
-                st.session_state.alert_timer -= 1
-            else:
-                st.session_state.phase = "break"
-                st.session_state.t2 = pomodoro_break_timer * 60
+            if not st.session_state.paused:
+                if st.session_state.alert_timer > 0:
+                    st.session_state.alert_timer -= 1
+                else:
+                    st.session_state.phase = "break"
+                    st.session_state.t2 = pomodoro_break_timer * 60
 
-        
+
+        #break
         elif st.session_state.phase == "break":
+
             mins, secs = divmod(st.session_state.t2, 60)
             st.title(f"Break: {mins:02d}:{secs:02d}")
 
-            if st.session_state.t2 > 0:
-                st.session_state.t2 -= 1
-            else:
-                st.error("Break time is over—back to work!")
-                st.session_state.button_clicked = False
-                st.session_state.phase = "done"
+            if not st.session_state.paused:
+                if st.session_state.t2 > 0:
+                    st.session_state.t2 -= 1
+                else:
+                    st.error("Break time is over—back to work!")
+                    st.session_state.button_clicked = False
+                    st.session_state.phase = "done"
 
 
 #Notes section
