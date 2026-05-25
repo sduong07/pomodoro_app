@@ -211,7 +211,7 @@ with pomodoro_col:
 
 
     #start button
-    if st.button("Start Pomodoro Session"):
+    if st.button("Start Pomodoro Timer"):
         st.session_state.button_clicked = True
         st.session_state.paused = False
         st.session_state.phase = "work"
@@ -284,7 +284,7 @@ with pomodoro_col:
                     st.session_state.t2 -= 1
                 else:
                     st.error("Break time is over—back to work!")
-                    #restart work session
+                    
                     st.session_state.phase = "alert"
                     st.session_state.next_phase = "work"
                     st.session_state.alert_timer = ALERT_DURATION
