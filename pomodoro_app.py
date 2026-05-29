@@ -413,17 +413,13 @@ with video_col:
                 unsafe_allow_html=True
             )
 
-            
-
-    #Setting up user choosing to search for a song or artist on youtube music
-    with st.expander("Search for a song or artist on youtube"):
+    # #Setting up user choosing to search for a song or artist on youtube music
+    with st.expander("Search for a song or artist on YouTube Music"):
         query = st.text_input("For Example: 'LE SSERAFIM'")
 
     if query:
-        
         results = ytmusic.search(query, filter="songs")
 
-        
         for idx, song in enumerate(results[:10]):
             title = song["title"]
             artist = song["artists"][0]["name"]
@@ -433,11 +429,15 @@ with video_col:
                 st.write(f"▶️ {title} by {artist}")
 
                 loop2 = st.checkbox("Repeat video", value=True, key=f"loop_video_{video_id}")
+                
+                
                 embed_url2 = f"https://www.youtube.com/embed/{video_id}?autoplay=1&mute=1"
                 if loop2:
+                    
                     embed_url2 += f"&loop=1&playlist={video_id}"
 
-                st.markdown(
+                
+                st.components.v1.html(
                     f"""
                     <iframe width="100%" height="400"
                         src="{embed_url2}"
@@ -446,7 +446,7 @@ with video_col:
                         allowfullscreen
                     ></iframe>
                     """,
-                    unsafe_allow_html=True
-                ) 
+                    height=400
+                )
 
-
+            
