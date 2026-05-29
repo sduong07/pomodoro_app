@@ -336,49 +336,49 @@ with video_col:
     
     
     #Setting up youtube player with curated playlist
-    st.write("**Here are some sample playlist and genres for studying**")
-    videos = {
-        #Lo-Fi Beats
-        "Lo-fi Jazz" : "https://www.youtube.com/watch?v=CBSlu_VMS9U",
-        "Lo-fi Hip Hop": "https://www.youtube.com/watch?v=-FlxM_0S2lA",
-        "Pokemon Lo-fi ": "https://www.youtube.com/watch?v=ceHXUTnOlDc",
-        "Studio Ghibi Lo-fi ": "https://www.youtube.com/watch?v=AZals4U6Z_I",
-        "Japanese Lo-fi ": "https://www.youtube.com/watch?v=mVycGYAPehY",
+    with st.expander("**Here are some sample playlist and genres for studying**"):
+        videos = {
+            #Lo-Fi Beats
+            "Lo-fi Jazz" : "https://www.youtube.com/watch?v=CBSlu_VMS9U",
+            "Lo-fi Hip Hop": "https://www.youtube.com/watch?v=-FlxM_0S2lA",
+            "Pokemon Lo-fi ": "https://www.youtube.com/watch?v=ceHXUTnOlDc",
+            "Studio Ghibi Lo-fi ": "https://www.youtube.com/watch?v=AZals4U6Z_I",
+            "Japanese Lo-fi ": "https://www.youtube.com/watch?v=mVycGYAPehY",
 
-        #Piano
-        "Classical Piano": "https://www.youtube.com/watch?v=WLWJy1eXX2c",
-        "Video Game Piano": "https://www.youtube.com/watch?v=k0h_8svvr1I",
-        "Anime Piano": "https://www.youtube.com/watch?v=HSOtku1j600",
-        "K-Pop Piano": "https://www.youtube.com/watch?v=KFJ3gNMq6do",
-        "Studio Ghibli Piano": "https://www.youtube.com/watch?v=l4WkvqGe_Ak",
-        "Jazz Piano": "https://www.youtube.com/watch?v=MYPVQccHhAQ",
+            #Piano
+            "Classical Piano": "https://www.youtube.com/watch?v=WLWJy1eXX2c",
+            "Video Game Piano": "https://www.youtube.com/watch?v=k0h_8svvr1I",
+            "Anime Piano": "https://www.youtube.com/watch?v=HSOtku1j600",
+            "K-Pop Piano": "https://www.youtube.com/watch?v=KFJ3gNMq6do",
+            "Studio Ghibli Piano": "https://www.youtube.com/watch?v=l4WkvqGe_Ak",
+            "Jazz Piano": "https://www.youtube.com/watch?v=MYPVQccHhAQ",
 
-        #Ambience
-        "Nature Ambience": "https://www.youtube.com/watch?v=ipf7ifVSeDU",
-        "Nintendo Video Game Ambience": "https://www.youtube.com/watch?v=MAsudG24NVM",
-        "Kingdom Hearts Ambience": "https://www.youtube.com/watch?v=hegvprK4TrM",
-        "Animal Crossing Ambience": "https://www.youtube.com/watch?v=CBYSzErVczM",
-        
+            #Ambience
+            "Nature Ambience": "https://www.youtube.com/watch?v=ipf7ifVSeDU",
+            "Nintendo Video Game Ambience": "https://www.youtube.com/watch?v=MAsudG24NVM",
+            "Kingdom Hearts Ambience": "https://www.youtube.com/watch?v=hegvprK4TrM",
+            "Animal Crossing Ambience": "https://www.youtube.com/watch?v=CBYSzErVczM",
+            
 
-        #Cafe
-        "Rainy Jazz Cafe": "https://www.youtube.com/watch?v=NJuSStkIZBg", 
-        "K-Pop Cafe": "https://www.youtube.com/watch?v=zZgW3zi039M"
+            #Cafe
+            "Rainy Jazz Cafe": "https://www.youtube.com/watch?v=NJuSStkIZBg", 
+            "K-Pop Cafe": "https://www.youtube.com/watch?v=zZgW3zi039M"
 
-    }
+        }
 
-    genres = ['Lo-fi', 'Piano', 'Ambience', 'Cafe']
-
-
-    selected_genre = st.selectbox("**Select a genre**:", genres)
-
-    filtered_videos = {name: url for name, url in videos.items() if selected_genre.lower() in name.lower()}
-
-    selected_video = st.selectbox(f"**Select a {selected_genre} playlist**:", list(filtered_videos.keys()))
+        genres = ['Lo-fi', 'Piano', 'Ambience', 'Cafe']
 
 
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.write("**Now Playing:**")
-    st.video(filtered_videos[selected_video])
+        selected_genre = st.selectbox("**Select a genre**:", genres)
+
+        filtered_videos = {name: url for name, url in videos.items() if selected_genre.lower() in name.lower()}
+
+        selected_video = st.selectbox(f"**Select a {selected_genre} playlist**:", list(filtered_videos.keys()))
+
+
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.write("**Now Playing:**")
+        st.video(filtered_videos[selected_video])
 
     
 
@@ -390,7 +390,6 @@ with video_col:
         parsed_url = urlparse(song_link)
         query_params = parse_qs(parsed_url.query)
         request_video_id = query_params.get("v", [None])[0]
-
 
 
         if song_link.strip():
