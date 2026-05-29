@@ -414,39 +414,41 @@ with video_col:
             )
 
     # #Setting up user choosing to search for a song or artist on youtube music
-    with st.expander("Search for a song or artist on YouTube Music"):
+    with st.expander("Search for a song or artist on youtube"):
         query = st.text_input("For Example: 'LE SSERAFIM'")
 
     if query:
+
         results = ytmusic.search(query, filter="songs")
 
         for idx, song in enumerate(results[:10]):
+
             title = song["title"]
             artist = song["artists"][0]["name"]
             video_id = song["videoId"]
 
             with st.expander(f"{title} - {artist}"):
+
                 st.write(f"▶️ {title} by {artist}")
 
-                loop2 = st.checkbox("Repeat video", value=True, key=f"loop_video_{video_id}")
-                
-                
-                embed_url2 = f"https://www.youtube.com/embed/{video_id}?autoplay=1&mute=1"
-                if loop2:
-                    
-                    embed_url2 += f"&loop=1&playlist={video_id}"
-
-                
-                st.components.v1.html(
-                    f"""
-                    <iframe width="100%" height="400"
-                        src="{embed_url2}"
-                        frameborder="0"
-                        allow="autoplay; encrypted-media"
-                        allowfullscreen
-                    ></iframe>
-                    """,
-                    height=400
+                loop2 = st.checkbox(
+                    "Repeat video",
+                    value=True,
+                    key=f"loop_video_{video_id}"
                 )
 
-            
+                embed_url2 = (
+                    f"https://www.youtube.com/embed/"
+                    f"{video_id}?mute=1"
+                )
+
+                if loop2:
+                    embed_url2 += (
+                        f"&loop=1&playlist={video_id}"
+                    )
+
+                components.iframe(
+                    embed_url2,
+                    height=400
+                )
+                
