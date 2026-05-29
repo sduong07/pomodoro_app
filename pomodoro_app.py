@@ -413,42 +413,42 @@ with video_col:
                 unsafe_allow_html=True
             )
 
-    # #Setting up user choosing to search for a song or artist on youtube music
-    with st.expander("Search for a song or artist on youtube"):
-        query = st.text_input("For Example: 'LE SSERAFIM'")
+    # # #Setting up user choosing to search for a song or artist on youtube music
+    # with st.expander("Search for a song or artist on youtube"):
+    #     query = st.text_input("For Example: 'LE SSERAFIM'")
 
-    if query:
+    # if query:
 
-        results = ytmusic.search(query, filter="songs")
+    #     results = ytmusic.search(query, filter="songs")
 
-        for idx, song in enumerate(results[:10]):
+    #     for idx, song in enumerate(results[:10]):
 
-            title = song["title"]
-            artist = song["artists"][0]["name"]
-            video_id = song["videoId"]
+    #         title = song["title"]
+    #         artist = song["artists"][0]["name"]
+    #         video_id = song["videoId"]
 
-            with st.expander(f"{title} - {artist}"):
+    #         with st.expander(f"{title} - {artist}"):
 
-                st.write(f"▶️ {title} by {artist}")
+    #             st.write(f"▶️ {title} by {artist}")
 
-                loop2 = st.checkbox(
-                    "Repeat video",
-                    value=True,
-                    key=f"loop_video_{video_id}"
-                )
+    #             loop2 = st.checkbox(
+    #                 "Repeat video",
+    #                 value=True,
+    #                 key=f"loop_video_{video_id}"
+    #             )
 
-                embed_url2 = (
-                    f"https://www.youtube.com/embed/"
-                    f"{video_id}?mute=1"
-                )
+    #             embed_url2 = (
+    #                 f"https://www.youtube.com/embed/"
+    #                 f"{video_id}?mute=1"
+    #             )
 
-                if loop2:
-                    embed_url2 += (
-                        f"&loop=1&playlist={video_id}"
-                    )
+    #             if loop2:
+    #                 embed_url2 += (
+    #                     f"&loop=1&playlist={video_id}"
+    #                 )
 
-                components.iframe(
-                    embed_url2,
-                    height=400
-                )
+    #             components.iframe(
+    #                 embed_url2,
+    #                 height=400
+    #             )
                 
