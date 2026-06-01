@@ -48,12 +48,12 @@ st.markdown("""
 <style>
 /* Expanded state */
 div[data-testid="stExpander"] details[open] summary {
-    background-color: white !important;
+    background-color: transparent !important;
 }
 
 /* Optional: remove any hover/background effects */
 div[data-testid="stExpander"] details[open] summary:hover {
-    background-color: white !important;
+    background-color: transparent !important;
 }
 </style>
 """, unsafe_allow_html=True)
