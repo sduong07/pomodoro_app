@@ -1,6 +1,24 @@
-/* Change all text color */
-html, body, [class*="css"]  {
-    color: #FF0000 !important;  /* Example: blue text */
+/* Text input labels */
+label {
+    color: black !important;
+}
+
+/* Markdown and regular text */
+.stMarkdown,
+.stText,
+p,
+div {
+    color: black !important;
+}
+
+/* Text area content */
+textarea {
+    color: black !important;
+}
+
+body {
+    color: #2E86C1;
+    background-color: #EBDDFD;
 }
 
 .stButton>button {
