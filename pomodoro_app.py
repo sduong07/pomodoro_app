@@ -120,7 +120,7 @@ remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
 
 #Header section
 st.markdown('<div class="main-header">Welcome to Pomodoro Comfy!</div>', unsafe_allow_html=True)
-st.subheader("This productivity app combines the pomodoro technique, sticky notes for studying, and a youtube music player to create a relaxing workspace. The pomodoro technique is a time management method using a timer to divide work into minute intervals, separated by short breaks to enhance focus and productivity.")
+st.subheader("This productivity app combines the pomodoro technique, sticky notes for studying, and a youtube music player to create a relaxing workspace.")
 
 
 st.markdown("<br>", unsafe_allow_html=True)
