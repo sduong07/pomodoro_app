@@ -44,18 +44,6 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.markdown(top_bar_css, unsafe_allow_html=True)
 
 
-st.markdown("""
-<style>
-[data-testid="stExpander"] details {
-    background-color: #f5f5f5;
-}
-
-[data-testid="stExpander"] details[open] {
-    background-color: #f5f5f5;
-}
-</style>
-""", unsafe_allow_html=True)
-
 #Injects custom css styling(Font to Pooppins, reduces top padding, defining styles for .main-header and.section-heading)
 st.markdown("""
 <style>
