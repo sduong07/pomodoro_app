@@ -43,9 +43,26 @@ st.markdown(hide_footer, unsafe_allow_html=True)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.markdown(top_bar_css, unsafe_allow_html=True)
 
+#expander css
+st.markdown(
+    '''
+    <style>
+    .streamlit-expanderHeader {
+        background-color: transparent;
+        color: black; # Adjust this for expander header color
+    }
+    .streamlit-expanderContent {
+        background-color: transparent;
+        color: black; # Expander content color
+    }
+    </style>
+    ''',
+    unsafe_allow_html=True
+)
+
+
 
 #Injects custom css styling(Font to Pooppins, reduces top padding, defining styles for .main-header and.section-heading)
-
 st.markdown("""
 <style>
 
