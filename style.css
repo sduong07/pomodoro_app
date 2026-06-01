@@ -1,6 +1,6 @@
-body {
-    color: #2E86C1;
-    background-color: #EBDDFD;
+/* Change all text color */
+html, body, [class*="css"]  {
+    color: #FF0000 !important;  /* Example: blue text */
 }
 
 .stButton>button {
