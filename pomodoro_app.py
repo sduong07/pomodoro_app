@@ -49,11 +49,11 @@ st.markdown(
     <style>
     .streamlit-expanderHeader {
         background-color: transparent;
-        color: black; # Adjust this for expander header color
+        color: transparent; # Adjust this for expander header color
     }
     .streamlit-expanderContent {
         background-color: transparent;
-        color: black; # Expander content color
+        color: transparent; # Expander content color
     }
     </style>
     ''',
