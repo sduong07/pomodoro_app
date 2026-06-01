@@ -1,6 +1,6 @@
 /* Text Input */
 .stTextInput input {
-    background-color: white !important;
+    background-color: transparent !important;
     color: black !important;
 }
 
@@ -11,7 +11,7 @@
 
 /* Number Input */
 .stNumberInput input {
-    background-color: white !important;
+    background-color: transparent !important;
     color: black !important;
 }
 
@@ -22,7 +22,7 @@
 
 /* Selectbox */
 .stSelectbox div[data-baseweb="select"] > div {
-    background-color: white !important;
+    background-color: transparent !important;
     color: black !important;
 }
 
@@ -42,16 +42,6 @@
 p,
 div {
     color: black !important;
-}
-
-/* Expander header */
-div[data-testid="stExpander"] summary {
-    color: white !important;
-}
-
-/* Expander content */
-div[data-testid="stExpander"] details > div {
-    color: white !important;
 }
 
 /* Text area content */
