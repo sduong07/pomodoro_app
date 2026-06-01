@@ -1,5 +1,11 @@
-/* Text input labels */
-label {
+/* Text Input */
+.stTextInput input {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* Text Input label */
+.stTextInput label {
     color: black !important;
 }
 
