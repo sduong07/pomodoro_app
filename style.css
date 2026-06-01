@@ -3,6 +3,33 @@ label {
     color: black !important;
 }
 
+/* Number Input */
+.stNumberInput input {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* Number Input label */
+.stNumberInput label {
+    color: black !important;
+}
+
+/* Selectbox */
+.stSelectbox div[data-baseweb="select"] > div {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* Selectbox selected value */
+.stSelectbox span {
+    color: black !important;
+}
+
+/* Selectbox label */
+.stSelectbox label {
+    color: black !important;
+}
+
 /* Markdown and regular text */
 .stMarkdown,
 .stText,
