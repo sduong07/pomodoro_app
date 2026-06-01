@@ -44,14 +44,19 @@ div {
     color: black !important;
 }
 
+/* Expander header */
+div[data-testid="stExpander"] summary {
+    color: white !important;
+}
+
+/* Expander content */
+div[data-testid="stExpander"] details > div {
+    color: white !important;
+}
+
 /* Text area content */
 textarea {
     color: black !important;
-}
-
-body {
-    color: #2E86C1;
-    background-color: #EBDDFD;
 }
 
 .stButton>button {
