@@ -44,6 +44,21 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.markdown(top_bar_css, unsafe_allow_html=True)
 
 
+st.markdown("""
+<style>
+/* Expanded state */
+div[data-testid="stExpander"] details[open] summary {
+    background-color: transparent !important;
+}
+
+/* Optional: remove any hover/background effects */
+div[data-testid="stExpander"] details[open] summary:hover {
+    background-color: transparent !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
 #Injects custom css styling(Font to Pooppins, reduces top padding, defining styles for .main-header and.section-heading)
 st.markdown("""
 <style>
