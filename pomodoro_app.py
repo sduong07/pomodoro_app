@@ -399,7 +399,7 @@ with video_col:
     st.write("**Or play your own music**")
 
     #Setting up user choosing their own video with link
-    with st.expander("Play a YouTube video by link"):
+    with st.expander("**Play a YouTube video by link**"):
         song_link = st.text_input("YouTube video link")
         parsed_url = urlparse(song_link)
         query_params = parse_qs(parsed_url.query)
