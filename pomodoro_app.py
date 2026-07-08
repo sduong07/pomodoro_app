@@ -313,9 +313,10 @@ with notes_col:
 
     st.markdown(f"""
 <style>
-.stTextArea [data-baseweb=base-input] {{
-   background-color: {bg_color} !important;
-   -webkit-text-fill-color: black !important;
+.stTextArea textarea {{
+    background-color: {bg_color} !important;
+    color: black !important;
+    -webkit-text-fill-color: black !important;
 }}
 </style>
 """, unsafe_allow_html=True)
