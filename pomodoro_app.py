@@ -311,25 +311,16 @@ with notes_col:
     bg_color = st.color_picker("**Select a background colour**", "#feff9c")
     st.markdown("<br>", unsafe_allow_html=True)
 
-#     st.markdown(f"""
-# <style>
-# .stTextArea [data-baseweb=base-input] {{
-#    background-color: {bg_color} !important;
-#    -webkit-text-fill-color: black !important;
-# }}
-# </style>
-# """, unsafe_allow_html=True)
+    st.markdown(f"""
+<style>
+.stTextArea [data-baseweb=base-input] {{
+   background-color: {bg_color} !important;
+   -webkit-text-fill-color: black !important;
+}}
+</style>
+""", unsafe_allow_html=True)
 
-    st.markdown(
-        f"""
-        <style>
-        :root {{
-            --notes-bg: {bg_color};
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+
 
     if "study_notes" not in st.session_state:
         st.session_state["study_notes"] = ""

@@ -45,18 +45,6 @@ div {
 }
 
 /* Text area content */
-:root {
-    --notes-bg: #feff9c; /* default */
-}
-
-.stTextArea [data-baseweb="base-input"] {
-    background-color: var(--notes-bg) !important;
-    -webkit-text-fill-color: black !important;
-}
-
-
-
-
 
 .stButton>button {
     color: #666;
