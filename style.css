@@ -44,5 +44,15 @@ div {
     color: black !important;
 }
 
+/* Text area content */
+textarea {
+    color: black !important;
+}
 
+.stButton>button {
+    color: #666;
+    background-color: #FADADD;
+    height: 4em;
+    width: 10em;
+}
 
