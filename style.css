@@ -45,6 +45,10 @@ div {
 }
 
 /* Text area content */
+.stTextArea [data-baseweb=base-input] {
+    background-color: ...;
+}
+
 
 .stButton>button {
     color: #666;
