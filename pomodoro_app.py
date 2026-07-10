@@ -133,8 +133,9 @@ remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
 
 
 #Header section
-st.markdown('<div class="main-header">Welcome to Pomodoro Comfy!</div>', unsafe_allow_html=True)
-st.subheader("This productivity app combines the Pomodoro Technique, sticky notes, and a Youtube music player to create a relaxing workspace.")
+st.markdown('<div class="main-header">Welcome to Pomodoro Comfy!</div>', unsafe_allow_html=True)st.subheader("")
+st.markdown('<div class="section-heading">This productivity app combines the Pomodoro Technique, sticky notes, and a Youtube music player to create a relaxing workspace.</div>', unsafe_allow_html=True)
+
 
 
 st.markdown("<br>", unsafe_allow_html=True)
