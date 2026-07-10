@@ -39,8 +39,7 @@
 /* Markdown and regular text */
 .stMarkdown,
 .stText,
-p,
-div {
+p {
     color: black !important;
 }
 
