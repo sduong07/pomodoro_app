@@ -30,7 +30,7 @@ header[data-testid="stHeader"] {
 </style>
 """
 
-#Makes the footer hidden
+#Hides the footer
 hide_footer = """
 <style>
 footer {visibility: hidden;}
@@ -59,7 +59,7 @@ div[data-testid="stExpander"] details[open] summary:hover {
 """, unsafe_allow_html=True)
 
 
-#Injects custom css styling(Font to Pooppins, reduces top padding, defining styles for .main-header and.section-heading)
+#Injects custom CSS(sets the font to Poppins, reduces top padding, and defines styles for .main-header and.section-heading)
 st.markdown("""
 <style>
 
@@ -94,11 +94,11 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-#Defining Functions
+#Define helper functions
 def clear_text():
     st.session_state.note_text = ""
 
-#Set background to a file image
+#Set the background from a local file
 def set_bg_local(image_file):
     with open(image_file, "rb") as f:
         data = f.read()
@@ -117,7 +117,7 @@ def set_bg_local(image_file):
         unsafe_allow_html=True,
     )
 
-#Css functions
+#CSS helper functions
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
@@ -134,7 +134,7 @@ remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
 
 #Header section
 st.markdown('<div class="main-header">Welcome to Pomodoro Comfy!</div>', unsafe_allow_html=True)
-st.subheader("This productivity app combines the pomodoro technique, sticky notes for studying, and a youtube music player to create a relaxing workspace.")
+st.subheader("This productivity app combines the Pomodoro Technique, sticky notes, and a Youtube music player to create a relaxing workspace.")
 
 
 st.markdown("<br>", unsafe_allow_html=True)
@@ -151,7 +151,7 @@ with pomodoro_col:
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("<div id='summary'></div>", unsafe_allow_html=True)
 
-    #Setting up pomodoro settings
+    #Configure pomodoro settings
     pomodoro_timer = st.number_input(
         "**How long should each focused work session be? (minutes)**",
         min_value=1,
@@ -166,8 +166,8 @@ with pomodoro_col:
     )
 
 
-    #Setting Up Alarm for Pomodoro
-
+    #Configure the Pomodoro alarm
+ 
     alarm_sounds = {
     "Classic Alarm": "https://raw.githubusercontent.com/sduong07/pomodoro_app/main/alarm/classic_alarm.mp3",
     "Motivation Alarm": "https://raw.githubusercontent.com/sduong07/pomodoro_app/main/alarm/motivation_alarm.mp3",
@@ -201,7 +201,7 @@ with pomodoro_col:
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    #initialize session state
+    #Initialize session state
     if "button_clicked" not in st.session_state:
         st.session_state.button_clicked = False
 
@@ -224,7 +224,7 @@ with pomodoro_col:
         st.session_state.next_phase = None
 
 
-    #start button
+    #Start button
     if st.button("Start Pomodoro Timer"):
         st.session_state.button_clicked = True
         st.session_state.paused = False
@@ -242,7 +242,7 @@ with pomodoro_col:
         """, height=0)
 
 
-    #pause/resume button
+    #Pause/Resume button
     if st.session_state.button_clicked and st.session_state.phase != "done":
 
         pause_label = "Resume" if st.session_state.paused else "Pause"
@@ -253,7 +253,7 @@ with pomodoro_col:
         st_autorefresh(interval=1000, key="timer_refresh")
 
 
-        #pomodoro
+        #Work session
         if st.session_state.phase == "work":
 
             mins, secs = divmod(st.session_state.t1, 60)
@@ -269,7 +269,7 @@ with pomodoro_col:
                     st.session_state.alert_timer = ALERT_DURATION
 
 
-        #alarm
+        #Alarm phase
         elif st.session_state.phase == "alert":
 
             st.audio(alarm_sound_url, autoplay=True)
@@ -287,7 +287,7 @@ with pomodoro_col:
                     st.session_state.t1 = pomodoro_timer * 60
 
 
-        #break
+        #Break session
         elif st.session_state.phase == "break":
 
             mins, secs = divmod(st.session_state.t2, 60)
@@ -335,7 +335,7 @@ with notes_col:
     st.button("Clear Text", on_click=clear_text)
 
     st.download_button(
-            label="Download text",
+            label="Download Notes",
             data=notes,
             file_name="message.txt",
             on_click="ignore",
@@ -352,8 +352,8 @@ with video_col:
 
     
     
-    #Setting up youtube player with curated playlist
-    with st.expander("**Here are some sample playlist and genres for studying**"):
+    #Set up the Youtube player with curated playlist
+    with st.expander("**Here are some sample playlists and genres for studying**"):
         videos = {
             #Lo-Fi Beats
             "Lo-fi Jazz" : "https://www.youtube.com/watch?v=CBSlu_VMS9U",
@@ -399,9 +399,9 @@ with video_col:
 
     
 
-    st.write("**Or play your own music**")
+    st.write("**Or play your own Youtube music**")
 
-    #Setting up user choosing their own video with link
+    #ALlow the user to play a Youtube video by entering a link
     with st.expander("**Play a YouTube video by link**"):
         song_link = st.text_input("YouTube video link")
         parsed_url = urlparse(song_link)
