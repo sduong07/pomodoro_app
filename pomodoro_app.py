@@ -1,4 +1,4 @@
-#Goal: Productivity App with Pomodoro Section, Note section, and a Youtube music player section. 
+#Goal: Productivity App with Pomodoro Section, Note section, and a YouTube music player section. 
 
 #Imports 
 import streamlit as st
@@ -134,7 +134,7 @@ remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
 
 #Header section
 st.markdown('<div class="main-header">Welcome to Pomodoro Comfy!</div>', unsafe_allow_html=True)
-st.markdown('<div class="section-heading">This productivity app combines the Pomodoro Technique, sticky notes, and a Youtube music player to create a relaxing workspace.</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-heading">This productivity app combines the Pomodoro Technique, sticky notes, and a YouTube music player to create a relaxing workspace.</div>', unsafe_allow_html=True)
 
 
 
@@ -345,7 +345,7 @@ with notes_col:
     )
 
         
-#Youtube Music Player Section
+#YouTube Music Player Section
 with video_col:  
     ytmusic = YTMusic()
     st.markdown('<div class="section-heading">YouTube Music Player</div>', unsafe_allow_html=True)
@@ -353,7 +353,7 @@ with video_col:
 
     
     
-    #Set up the Youtube player with curated playlist
+    #Set up the YouTube player with curated playlist
     with st.expander("**Here are some sample playlists and genres for studying**"):
         videos = {
             #Lo-Fi Beats
@@ -400,7 +400,7 @@ with video_col:
 
     
 
-    st.write("**Or play your own Youtube music**")
+    st.write("**Or play your own YouTube music**")
 
     #ALlow the user to play a Youtube video by entering a link
     with st.expander("**Play a YouTube video by link**"):
