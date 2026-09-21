@@ -376,6 +376,7 @@ with video_col:
             "Nintendo Video Game Ambience": "https://www.youtube.com/watch?v=MAsudG24NVM",
             "Kingdom Hearts Ambience": "https://www.youtube.com/watch?v=hegvprK4TrM",
             "Animal Crossing Ambience": "https://www.youtube.com/watch?v=CBYSzErVczM",
+            "World of Warcraft Alliance Tavern Ambience": "https://www.youtube.com/watch?v=Oeo2VCCtUZQ",
             
 
             #Cafe
